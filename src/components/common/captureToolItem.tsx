@@ -1,13 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import {
-  Link,
-  FileJson,
-  CheckSquare,
-  MessageSquare,
   BarChart2,
+  CheckSquare,
+  FileJson,
+  Link,
+  MessageSquare,
   Send,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { NavLink } from "react-router-dom";
 
 interface CaptureToolItem {
@@ -33,20 +33,24 @@ export default function CaptureToolsCard() {
       </CardHeader>
       <CardContent className="p-0">
         <div className="space-y-1">
-          {captureTools.map((tool, index) => (
-            <NavLink
-              to={tool.path}
-              key={index}
-              className={cn(
-                "flex items-center px-4 py-2 text-sm transition-colors hover:bg-gray-100",
-                tool.path === location.pathname &&
-                  "bg-primary text-primary-foreground hover:bg-primary/90",
-              )}
-            >
-              <tool.icon className="mr-3 h-4 w-4" />
-              {tool.label}
-            </NavLink>
-          ))}
+          {captureTools.map((tool, index) => {
+            return (
+              <NavLink
+                to={tool.path}
+                key={index}
+                className={() =>
+                  cn(
+                    "flex items-center px-4 py-2 text-sm transition-colors hover:bg-gray-100",
+                    tool.path === location.pathname &&
+                      "bg-primary text-primary-foreground hover:bg-primary/90",
+                  )
+                }
+              >
+                <tool.icon className="mr-3 h-4 w-4" />
+                {tool.label}
+              </NavLink>
+            );
+          })}
         </div>
       </CardContent>
     </Card>
