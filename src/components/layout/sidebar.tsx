@@ -17,7 +17,11 @@ interface SidebarProps {
   onClose: () => void;
 }
 
-export default function Component({ className, isOpen, onClose }: SidebarProps) {
+export default function Component({
+  className,
+  isOpen,
+  onClose,
+}: SidebarProps) {
   const menuItems = [
     { icon: Clock, label: "Schedule", path: "#" },
     { icon: Users, label: "Users", path: "#" },
@@ -33,26 +37,35 @@ export default function Component({ className, isOpen, onClose }: SidebarProps) 
   return (
     <aside
       className={cn(
-        "fixed z-20 transition-transform md:relative shadow-md md:shadow-none flex h-full w-16 flex-col items-center border-r bg-white py-4",
+        "fixed z-20 transition-transform md:relative shadow-md md:shadow-none flex h-full w-16 flex-col items-center border-r bg-white ",
         isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
         className,
       )}
       onClick={onClose}
     >
-      {menuItems.map((item, index) => (
-        <NavLink
-          key={index}
-          to={item.path}
-          className={cn(
-            "mb-2 flex h-12 w-12 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-gray-100",
-            item.path === "/" &&
-              "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
-          )}
-          aria-label={item.label}
-        >
-          <item.icon className="h-6 w-6" />
-        </NavLink>
-      ))}
+      <div
+        className={cn(
+          "w-[100vw] bg-black/10 absolute md:hidden top-0 right-0 bottom-0 left-0",
+          isOpen ? "block" : "hidden",
+        )}
+        onClick={onClose}
+      />
+      <div className="bg-white relative py-4 h-full w-full flex flex-col items-center">
+        {menuItems.map((item, index) => (
+          <NavLink
+            key={index}
+            to={item.path}
+            className={cn(
+              "mb-2 flex h-12 w-12 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-gray-100",
+              item.path === "/" &&
+                "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
+            )}
+            aria-label={item.label}
+          >
+            <item.icon className="h-6 w-6" />
+          </NavLink>
+        ))}
+      </div>
     </aside>
   );
 }
